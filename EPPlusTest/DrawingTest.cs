@@ -83,25 +83,25 @@ namespace EPPlusTest
             pic.SetSize(150);
 
             //pic = ws.Drawings.AddPicture("Pic4", new FileInfo(Path.Combine(_clipartPath, "Vector Drawing.wmf")));
-            pic = ws.Drawings.AddPicture("Pic5", new FileInfo(Path.Combine(_clipartPath,"BitmapImage.gif")));
-            pic.SetPosition(400, 200);
-            pic.SetSize(150);
+            var pic2 = ws.Drawings.AddPicture("Pic5", new FileInfo(Path.Combine(_clipartPath,"BitmapImage.gif")));
+            pic2.SetPosition(400, 200);
+            pic2.SetSize(150);
 
             ws.Column(1).Width = 53;
             ws.Column(4).Width = 58;
 
-            pic = ws.Drawings.AddPicture("Pic6öäå", new FileInfo(Path.Combine(_clipartPath, "BitmapImage.gif")));
-            pic.SetPosition(400, 400);
-            pic.SetSize(100);
+             pic2 = ws.Drawings.AddPicture("Pic6öäå", new FileInfo(Path.Combine(_clipartPath, "BitmapImage.gif")));
+            pic2.SetPosition(400, 400);
+            pic2.SetSize(100);
 
-            pic = ws.Drawings.AddPicture("PicPixelSized", Resources.Test1);
-            pic.SetPosition(800, 800);
-            pic.SetSize(568*2, 66*2);
+            var pic3 = ws.Drawings.AddPicture("PicPixelSized", Resources.Test1);
+            pic3.SetPosition(800, 800);
+            pic3.SetSize(568*2, 66*2);
             var ws2 = _pck.Workbook.Worksheets.Add("Picture2");
             var fi = new FileInfo(Path.Combine(_clipartPath, "BitmapImage.gif"));
             if (fi.Exists)
             {
-                pic = ws2.Drawings.AddPicture("Pic7", fi);
+                var pic4 = ws2.Drawings.AddPicture("Pic7", fi);
             }
             else
             {

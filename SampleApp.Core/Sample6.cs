@@ -424,7 +424,7 @@ namespace EPPlusSamples
                 //Add the icon as a picture
                 if (icon != null)
                 {
-                    ExcelPicture pic = ws.Drawings.AddPicture("pic" + (row).ToString(), icon);
+                    OfficeOpenXml.Drawing.Custom.ExcelPicture pic = ws.Drawings.AddPicture("pic" + (row).ToString(), icon);
                     pic.SetPosition((int)20 * (row - 1) + 2, 0);
                 }
             }
@@ -457,7 +457,7 @@ namespace EPPlusSamples
                     ws.Row(row).Height = height;
                     if (fileIcon != null)
                     {
-                        ExcelPicture pic = ws.Drawings.AddPicture("pic" + (row).ToString(), fileIcon);
+                        OfficeOpenXml.Drawing.Custom.ExcelPicture pic = ws.Drawings.AddPicture("pic" + (row).ToString(), fileIcon);
                         pic.SetPosition((int)20 * (row - 1) + 2, 0);
                     }
                 }

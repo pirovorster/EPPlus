@@ -455,7 +455,7 @@ namespace EPPlusTest
 
             // add autofilter
             ws.Cells["U19:X24"].AutoFilter = true;
-            ExcelPicture pic = ws.Drawings.AddPicture("Pic1", Properties.Resources.Test1);
+            OfficeOpenXml.Drawing.Custom.ExcelPicture pic = ws.Drawings.AddPicture("Pic1", Properties.Resources.Test1);
             pic.SetPosition(150, 140);
 
             ws.Cells["A30"].Value = "Text orientation 45";

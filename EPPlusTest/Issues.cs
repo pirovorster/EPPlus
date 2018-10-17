@@ -1906,7 +1906,7 @@ namespace EPPlusTest
                 ExcelWorkbook wb = package.Workbook;
                 ExcelWorksheet sh = wb.Worksheets[1];
                 System.Drawing.Image img_ = System.Drawing.Image.FromFile(@"C:\temp\img\background.gif");
-                ExcelPicture pic = sh.Drawings.AddPicture("logo", img_);
+                OfficeOpenXml.Drawing.Custom.ExcelPicture pic = sh.Drawings.AddPicture("logo", img_);
                 pic.SetPosition(1, 1);
 
                 package.SaveAs(outputFile);
