@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyVersion>4.5.2.1</AssemblyVersion>
     <FileVersion>4.5.2.1</FileVersion>
-    <Version>4.5.5</Version>
+    <Version>4.5.6</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseUrl>https://www.gnu.org/licenses/lgpl-3.0.en.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/JanKallman/EPPlus</PackageProjectUrl>
@@ -269,9 +269,6 @@ Release Candidate changes
   <!--<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0' or '$(TargetFramework)' == 'netstandard2.0'">-->
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing">
-      <Version>1.0.0-beta0005</Version>
-    </PackageReference>
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="System.Drawing.Common">

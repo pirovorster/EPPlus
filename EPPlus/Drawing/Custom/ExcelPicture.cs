@@ -39,7 +39,6 @@ using System.IO;
 using System.Diagnostics;
 using OfficeOpenXml.Utils;
 using OfficeOpenXml.Compatibility;
-using SixLabors.ImageSharp;
 
 namespace OfficeOpenXml.Drawing.Custom
 {
@@ -62,14 +61,14 @@ namespace OfficeOpenXml.Drawing.Custom
                 FileInfo f = new FileInfo(UriPic.OriginalString);
 
                 var data = Part.GetStream().ToArray();
-                var image = Image.Load(data);
 
+                //We are not doing anything ith this image so hopefully this works
                 ImageModel = new ImageModel
                 {
-                    Width = image.Width,
-                    Height = image.Height,
-                    HorizontalResolution = (float)image.MetaData.HorizontalResolution,
-                    VerticalResolution = (float)image.MetaData.VerticalResolution,
+                    Width = 1,
+                    Height = 1,
+                    HorizontalResolution =1,
+                    VerticalResolution = 1,
                     Data = data
                 };
 
