@@ -663,7 +663,8 @@ namespace OfficeOpenXml
         }
         private void CopyDrawing(ExcelWorksheet Copy, ExcelWorksheet workSheet/*, PackageRelationship r*/)
         {
-
+            //We do this since Image.Drawing cannot be removed from this section
+            return;
             //First copy the drawing XML                
             string xml = Copy.Drawings.DrawingXml.OuterXml;
             var uriDraw = new Uri(string.Format("/xl/drawings/drawing{0}.xml", workSheet.SheetID), UriKind.Relative);
