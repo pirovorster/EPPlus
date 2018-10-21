@@ -39,6 +39,7 @@ using System.IO;
 using System.Diagnostics;
 using OfficeOpenXml.Utils;
 using OfficeOpenXml.Compatibility;
+using SixLabors.ImageSharp;
 
 namespace OfficeOpenXml.Drawing.Custom
 {
@@ -48,7 +49,51 @@ namespace OfficeOpenXml.Drawing.Custom
     public sealed class ExcelPicture : ExcelDrawing
     {
         #region "Constructors"
+        internal ExcelPicture(ExcelDrawings drawings, XmlNode node) :
+           base(drawings, node, "xdr:pic/xdr:nvPicPr/xdr:cNvPr/@name")
+        {
+            XmlNode picNode = node.SelectSingleNode("xdr:pic/xdr:blipFill/a:blip", drawings.NameSpaceManager);
+            if (picNode != null)
+            {
+                RelPic = drawings.Part.GetRelationship(picNode.Attributes["r:embed"].Value);
+                UriPic = UriHelper.ResolvePartUri(drawings.UriDrawing, RelPic.TargetUri);
 
+                Part = drawings.Part.Package.GetPart(UriPic);
+                FileInfo f = new FileInfo(UriPic.OriginalString);
+
+                var data = Part.GetStream().ToArray();
+                var image = Image.Load(data);
+
+                ImageModel = new ImageModel
+                {
+                    Width = image.Width,
+                    Height = image.Height,
+                    HorizontalResolution = (float)image.MetaData.HorizontalResolution,
+                    VerticalResolution = (float)image.MetaData.VerticalResolution,
+                    Data = data
+                };
+
+                var ii = _drawings._package.LoadImage(data, UriPic, Part);
+                ImageHash = ii.Hash;
+
+                //_height = _image.Height;
+                //_width = _image.Width;
+                string relID = GetXmlNodeString("xdr:pic/xdr:nvPicPr/xdr:cNvPr/a:hlinkClick/@r:id");
+                if (!string.IsNullOrEmpty(relID))
+                {
+                    HypRel = drawings.Part.GetRelationship(relID);
+                    if (HypRel.TargetUri.IsAbsoluteUri)
+                    {
+                        _hyperlink = new ExcelHyperLink(HypRel.TargetUri.AbsoluteUri);
+                    }
+                    else
+                    {
+                        _hyperlink = new ExcelHyperLink(HypRel.TargetUri.OriginalString, UriKind.Relative);
+                    }
+                    ((ExcelHyperLink)_hyperlink).ToolTip = GetXmlNodeString("xdr:pic/xdr:nvPicPr/xdr:cNvPr/a:hlinkClick/@tooltip");
+                }
+            }
+        }
 
         internal ExcelPicture(ExcelDrawings drawings, XmlNode node, ImageModel image, Uri hyperlink) :
             base(drawings, node, "xdr:pic/xdr:nvPicPr/xdr:cNvPr/@name")
@@ -72,7 +117,8 @@ namespace OfficeOpenXml.Drawing.Custom
             SetPosDefaults(image);
             package.Flush();
         }
-        
+
+
 
         internal static string GetContentType(string extension)
         {
@@ -184,7 +230,7 @@ namespace OfficeOpenXml.Drawing.Custom
 
             return RelPic.Id;
         }
-        
+
         private void SetPosDefaults(ImageModel image)
         {
             EditAs = eEditAs.OneCell;
