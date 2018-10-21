@@ -1,31 +1,18 @@
+﻿using OfficeOpenXml;
+using OfficeOpenXml.Drawing.Custom;
+using SixLabors.ImageSharp;
 using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs.Host;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-using OfficeOpenXml.Drawing.Custom;
-using SixLabors.ImageSharp;
 
-namespace FunctionApp1
+namespace ConsoleApp1
 {
-    public static class Function1
+    class Program
     {
-        [FunctionName("Function1")]
-        public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
+        static void Main(string[] args)
         {
-            log.Info("C# HTTP trigger function processed a request.");
-
             Run();
-            // parse query parameter
-
-            return null;
+            Console.WriteLine("Hello World!");
         }
 
         private static float MeasureString(string s, Font font)
@@ -38,7 +25,7 @@ namespace FunctionApp1
             }
         }
 
-        internal static int GetWidthInPixels( ExcelRangeBase cell)
+        internal static int GetWidthInPixels(ExcelRangeBase cell)
         {
             double columnWidth = cell.Worksheet.Column(cell.Start.Column).Width;
             Font font = new Font(cell.Style.Font.Name, cell.Style.Font.Size, FontStyle.Regular);
@@ -48,7 +35,7 @@ namespace FunctionApp1
             return (int)(columnWidth * pxBaseline);
         }
 
-        internal static int GetHeightInPixels( ExcelRangeBase cell)
+        internal static int GetHeightInPixels(ExcelRangeBase cell)
         {
             using (Graphics graphics = Graphics.FromHwnd(IntPtr.Zero))
             {
@@ -77,10 +64,9 @@ namespace FunctionApp1
                         VerticalResolution = (float)image.MetaData.HorizontalResolution,
                     };
                     var picture = sheet.Drawings.AddPicture(Guid.NewGuid().ToString(), imageModel);
-                    
+
                     picture.From.Column = targetCell.Start.Column - 1;
                     picture.From.Row = targetCell.Start.Row - 1;
-
 
                     var pixelWidth = targetCell.Worksheet.Column(targetCell.Start.Column).Width * 7;
                     var pixelHeight = targetCell.Worksheet.Row(targetCell.Start.Row).Height * (1 + 1.0 / 3);
